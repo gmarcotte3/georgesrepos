@@ -1,0 +1,5 @@
+**/build-specific/*
+**/build-files/*
+**/target/*
+*.save
+*.bak
