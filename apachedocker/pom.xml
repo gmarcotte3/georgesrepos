@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.vizexplorer.com</groupId>
+  <artifactId>apachedocker</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <dependencies>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>filter</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin> 
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <configuration>
+          <imageName>marcotte/apachedocker</imageName>
+          <registryUrl>https://localhost:5000</registryUrl>
+          <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+          <pushImage>false</pushImage>
+          <resources>
+            <resource>
+              <targetPath>/</targetPath>
+              <directory>${project.build.directory}</directory>
+              <include>**/*</include>
+            </resource>
+          </resources>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+      </executions>
+      </plugin> 
+    </plugins>
+  </build>
+</project>
